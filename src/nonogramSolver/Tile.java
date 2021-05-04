@@ -1,6 +1,11 @@
 package nonogramSolver;
 
+/**
+ * Enum to define the states of a tile
+ *
+ * @author Edward Josh Hermano
+ */
 public enum Tile
 {
-	BLANK, FILL, NOT, MAYBE_FILL, MAYBE_NOT;
+	BLANK, FILL, SPACE, MAYBE_FILL, MAYBE_SPACE;
 }
