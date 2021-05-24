@@ -8,31 +8,31 @@ import java.util.ArrayList;
 //	10010
 //	01100
 //	10111
+
+// 0011110
 public class NonogramSolverTester
 {
 	private static final int[][] COL_KEYS =
 		{
-			{2,1},
-			{2,1},
-			{2,2},
-			{4},
-			{1,1},
+//			{0}, {1}, {2}
+//			{2,1}, {2,1}, {2,2}, {4}, {1,1},
+			{0},{0},{1},{1},{1},{1},{0}
+//			{1},{0},{1}
 		};
 	
 	private static final int[][] ROW_KEYS =
 		{
-			{0},
-			{2},
-			{5},
-			{1,1},
-			{3},
-			{1,3}
+//			{1},{2}
+//			{0}, {2}, {5}, {1,1}, {3}, {1,3}
+			{4}
+//			{1,1}
 		};
 	
 	public static void main(String[] args) {
 		System.out.println("Start");
 		NonogramSolverTester tester = new NonogramSolverTester();
 		NonogramSolver solver = new NonogramSolver(tester.getColKeys(),tester.getRowKeys());
+		System.out.println(solver.keysToString());
 		System.out.println(solver.getSolutionAsString());
 	}
 	

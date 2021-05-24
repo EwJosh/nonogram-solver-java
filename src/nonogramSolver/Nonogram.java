@@ -5,12 +5,17 @@ public class Nonogram
 	public Nonogram(int width, int height)
 	{
 		this.grid = new Tile[height][width];
-		for(Tile[] row: this.grid) {
-			for(Tile t: row) {
-				t = Tile.BLANK;
+//		for(Tile[] row: this.grid) {
+//			for(Tile t: row) {
+//				t = Tile.BLANK;
+//			}
+//		}
+		for(int j = 0; j < this.getHeight(); j++) {
+			for(int i = 0; i < this.getWidth(); i++) {
+				grid[j][i] = Tile.BLANK;
 			}
 		}
-		completion = 0;
+//		completion = 0;
 	}
 	
 	public int getWidth() {
@@ -21,9 +26,9 @@ public class Nonogram
 		return this.grid.length;
 	}
 	
-	public boolean isCompleted() {
-		return completion >= this.getWidth() * getHeight();
-	}
+//	public boolean isCompleted() {
+//		return completion >= this.getWidth() * getHeight();
+//	}
 	
 	public Tile getTile(int x, int y) {
 		return this.grid[y][x];
@@ -49,26 +54,68 @@ public class Nonogram
 	}
 	
 	/**
-	 * Replace all BLANK tiles in the indexed row/column with the specified tile type.
+	 * Gets the amount of the specified tile type in the given line.
 	 * 
-	 * @param index The index of the row/column to pour.
-	 * @param tileType The type of Tile to pour into the row/column. Either Tile.FILLED or Tile.BLOCKED.
-	 * @param isRow true if pouring over a row, false if pouring over a column.
+	 * @param index The index of the row/column to search
+	 * @param isRow true if searching a row, false if searching a column.
+	 * @param tileType The type of Tile to count. e.g. Tile.FILL, Tile.SPACE
+	 * @return the amount of the specified tile type in the given line
 	 */
-	public void pour(int index, Tile tileType, boolean isRow) {
-		int width = this.getWidth();
-		int height = this.getHeight();
+	public int getTileTypeCount(int index, boolean isRow, Tile tileType) {
+		int count = 0;
 		if(isRow) {
+			int width = this.getWidth();
 			for(int i = 0; i < width; i++) {
-				this.grid[index][i] = tileType;
+				if(this.grid[index][i] == tileType)
+					count++;
 			}
 		}
 		else {
+			int height = this.getHeight();
 			for(int j = 0; j < height; j++) {
-				this.grid[j][index] = tileType;
+				if(this.grid[j][index] == tileType)
+					count++;
+			}
+		}
+		return count;
+	}
+	
+	public boolean setTile(int x, int y, Tile tileType) {
+		if(this.getTile(x, y) == Tile.BLANK) {
+			grid[y][x]= tileType;
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Replace all BLANK tiles in the indexed row/column with the specified tile type.
+	 * 
+	 * @param index The index of the row/column to pour.
+	 * @param isRow true if pouring over a row, false if pouring over a column.
+	 * @param tileType The type of Tile to pour into the row/column. e.g. Tile.FILL, Tile.SPACE.
+	 */
+	public void pour(int index, boolean isRow, Tile tileType) {
+		if(isRow) {
+			int width = this.getWidth();
+			for(int i = 0; i < width; i++) {
+				if(this.grid[index][i] == Tile.BLANK)
+					this.grid[index][i] = tileType;
+			}
+		}
+		else {
+			int height = this.getHeight();
+			for(int j = 0; j < height; j++) {
+				if(this.grid[j][index] == Tile.BLANK)
+					this.grid[j][index] = tileType;
 			}
 		}
 	}
+	
+	public void simpleFill() {
+		
+	}
+	
 	
 	@Override
 	public String toString()
@@ -83,7 +130,7 @@ public class Nonogram
 				else if(this.getTile(i, j)==Tile.BLANK)
 					solution += "x ";
 				else
-					solution += "n ";					
+					solution += "e ";					
 			}
 			solution += "\n";
 		}
@@ -91,5 +138,5 @@ public class Nonogram
 	}
 	
 	private Tile[][] grid;
-	private int completion;
+//	private int completion;
 }
